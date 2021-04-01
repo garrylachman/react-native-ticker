@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, Children } from "react";
 import { StyleSheet, Text, View, TextStyle, TextProps, I18nManager } from "react-native";
-import Animated, { Easing } from "react-native-reanimated";
+import Animated, { EasingNode } from 'react-native-reanimated';
 
 const styles = StyleSheet.create({
   row: {
@@ -100,12 +100,12 @@ const TickItem: React.FC<TickProps> = ({
       Animated.timing(stylePos, {
         toValue: position,
         duration,
-        easing: Easing.linear,
+        easing: EasingNode.linear,
       }).start();
       Animated.timing(widthAnim, {
         toValue: measurement.width,
         duration: 25,
-        easing: Easing.linear,
+        easing: EasingNode.linear,
       }).start();
     }
   }, [position, measurement]);
@@ -114,8 +114,10 @@ const TickItem: React.FC<TickProps> = ({
     <Animated.View
       style={{
         height: measurement.height,
-        width: widthAnim,
         overflow: "hidden",
+        transform: [
+          { scaleX: widthAnim }
+        ]
       }}
     >
       <Animated.View
